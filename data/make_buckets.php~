@@ -1,0 +1,53 @@
+<?php
+// php 'this_file_name' 'data_file_name'
+// カレントディレクトリに bucket[0-9] というファイルが生成される
+$bucket_count = 3; // データを何個に分けるか
+
+$posi_graphs = [];
+$nega_graphs = [];
+$lines = file($argv[1]);
+foreach ($lines as $line) {
+	if ($line[0] == 't') {
+		$graph = [];
+		$graph[] = $line;
+		$category = explode(' ', $line)[3];
+	} else if ($line[0] == 'v' or $line[0] == 'e') {
+		$graph[] = $line;
+	} else {
+		$graph[] = $line;
+		if ($category > 0) {
+			$posi_graphs[] = $graph;
+		} else {
+			$nega_graphs[] = $graph;
+		}
+	}
+}
+$buckets = [];
+
+$b = 0;
+while (!empty($posi_graphs)) {
+	$r = rand(0, count($posi_graphs) - 1);
+	$key = array_keys($posi_graphs)[$r];
+	foreach ($posi_graphs[$key] as $line) {
+		$buckets[$b][] = $line;
+	}
+	unset($posi_graphs[$key]);
+	$b++;
+	$b = $b % $bucket_count;
+}
+
+$b = 9;
+while (!empty($nega_graphs)) {
+	$r = rand(0, count($nega_graphs) - 1);
+	$key = array_keys($nega_graphs)[$r];
+	foreach ($nega_graphs[$key] as $line) {
+		$buckets[$b][] = $line;
+	}
+	unset($nega_graphs[$key]);
+	$b--;
+	$b = ($b + $bucket_count) % $bucket_count;
+}
+
+for ($i = 0; $i < $bucket_count; $i++) {
+	file_put_contents("bucket$i", $buckets[$i]);
+}

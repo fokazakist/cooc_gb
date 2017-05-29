@@ -1,0 +1,101 @@
+#coding: UTF-8
+
+import re
+import sys
+import csv
+import codecs
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+
+if(len(sys.argv) != 4):
+    print 'Usage: # python %s chemblsdf' % sys.argv[0]
+    quit()
+
+sdffile = sys.argv[1]
+fi = open(sdffile,'r')
+gspfile = sys.argv[3]
+fo = open(gspfile,'w')
+csvfile = sys.argv[2]
+f = open(csvfile, 'r')
+activedict = {}
+reader = csv.reader(f)
+header = next(reader)
+for list in reader:
+    activedict[list[0]]= list[2]
+#print activedict
+dict = {"H ":0, "C ":1, "O ":2}
+g_count = 0
+v_count = 0
+e_count = 0
+g_act = -1
+flag = True
+act_count = 0
+ina_count = 0
+un_count  = 0
+
+while 1:
+    line = fi.readline()
+    if not line:
+        break
+    while flag:
+        if len(line) > 1:
+            if activedict.has_key(line[:-1]) == False:
+                flag = False
+                print "not found"
+                break
+            flag = False
+            #print activedict[str(line[:-1])]
+            if activedict[str(line[:-1])] == 'Active':
+                act_count += 1
+                g_act = 1
+            if activedict[str(line[:-1])] == 'Unspecified':
+                un_count += 1 
+                g_act = 0
+            if activedict[str(line[:-1])] == 'Inactive':
+                ina_count += 1
+                g_act = -1
+                line = fi.readline()
+    if g_act == 0:
+        while 1:
+            look = fi.readline()
+            if look[:4] == "$$$$":
+                flag = True
+                g_act = -1
+                #print "Unspecified"
+                break
+    if not line:
+        break
+    if line[:6] == "M  END":
+        while 1:
+            look = fi.readline()
+            if look[:4] == "$$$$":
+                flag = True
+                fo.write("\n")
+                v_count = 0
+                e_count = 0
+                break
+    if len(line) == 40:
+        fo.write( "t # 0 " + str(g_act)+"\n")
+        g_count += 1
+        v_count = int(line[0:3])
+        e_count = int(line[3:6])
+        for v in range(v_count):
+            line = fi.readline()
+            if dict.has_key(line[31:33]) == True:
+                fo.write("v " + str(v) + " " + str(dict[line[31:33]]) + "\n")
+            else:
+                dict[line[31:33]] = len(dict)
+                fo.write("v " + str(v) + " " + str(dict[line[31:33]])+"\n")
+        for e in range(e_count):
+            line = fi.readline();
+            fo.write("e " + str(int(line[0:3])-1) + " " \
+                     + str(int(line[3:6])-1) + " " + str(int(line[8:9]))+"\n")
+
+print u"グラフ数：" + str(g_count)
+print u"Activeデータ"+ str(act_count)
+print u"Inactiveデータ" + str(ina_count)
+print u"Unspecifiedデータ"+ str(un_count)
+print "atom's dict"
+print dict
+fi.close()
+fo.close()
+f.close()

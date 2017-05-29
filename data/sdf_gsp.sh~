@@ -1,0 +1,18 @@
+
+#data=('NCI47' 'NCI81' 'NCI83' 'NCI109' 'NCI123' 'NCI145' 'NCI167' 'NCI330')
+#data=('47' '81' '83' '123' '145' '167' '330')
+data=('cpdb')
+list=('train' 'test')
+
+for d in ${data[@]};do
+    echo ${d}
+    mkdir -p ${d}_gsp
+    for l in ${list[@]};do
+	echo \{\"H \":0,\"C \":1,\"O \":2\} > dict
+	for i in 0 1 2 3 4 5 6 7 8 9;do
+	    echo ${d}/${d}_${l}${i}.sdf
+	    python transfer_dict.py ${d}/${d}_${l}${i}.sdf ${d}/${d}.csv ${d}_${l}${i}.gsp dict
+	    mv ${d}_${l}${i}.gsp ${d}_gsp
+	done
+    done
+done

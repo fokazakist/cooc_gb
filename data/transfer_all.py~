@@ -1,0 +1,25 @@
+#coding: UTF-8
+
+import re
+import sys
+import csv
+import codecs
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+
+if(len(sys.argv) != 4):
+    print 'Usage: # python %s chemblsdf' % sys.argv[0]
+    quit()
+
+sdffile = sys.argv[1]
+fi = open(sdffile,'r')
+gspfile = sys.argv[3]
+fo = open(gspfile,'w')
+csvfile = sys.argv[2]
+f = open(csvfile, 'r')
+activedict = {}
+reader = csv.reader(f)
+header = next(reader)
+for list in reader:
+    activedict[list[0]]= list[2]
+#print activedict
+dict = {"H ":0, "C ":1, "O ":2}
