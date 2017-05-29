@@ -2,7 +2,7 @@ CXX = g++
 VERSION = 0.01
 NAME = gspan
 CXXFLAGS = -O3 -Wall -Wno-deprecated
-LDFLAGS =  -static -lm -ldl 
+LDFLAGS =  -lm -ldl #remove "-static" for Mac,in linux need to compile?
 TARGETS = lpboost
 OBJ = gspan.o cashtree.o 
 
