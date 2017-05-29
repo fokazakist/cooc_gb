@@ -2,7 +2,7 @@
 # Generated automatically by configure.
 # Run this file to recreate the current configuration.
 # This directory was configured as follows,
-# on host okazaki-h9-1280jp:
+# on host fokazaki.local:
 #
 # ./configure 
 #
@@ -63,10 +63,10 @@ s%@INSTALL_SCRIPT@%${INSTALL_PROGRAM}%g
 s%@INSTALL_DATA@%${INSTALL} -m 644%g
 s%@PACKAGE@%GLPK%g
 s%@VERSION@%4.8%g
-s%@ACLOCAL@%/home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing aclocal%g
-s%@AUTOCONF@%/home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing autoconf%g
-s%@AUTOMAKE@%/home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing automake%g
-s%@AUTOHEADER@%/home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing autoheader%g
+s%@ACLOCAL@%/Users/fokazaki/gboost/cooc_gb/glpk-4.8/missing aclocal%g
+s%@AUTOCONF@%autoconf%g
+s%@AUTOMAKE@%/Users/fokazaki/gboost/cooc_gb/glpk-4.8/missing automake%g
+s%@AUTOHEADER@%autoheader%g
 s%@MAKEINFO@%makeinfo%g
 s%@SET_MAKE@%%g
 s%@CC@%gcc%g

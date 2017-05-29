@@ -12,6 +12,9 @@ configure:765: checking for working makeinfo
 configure:782: checking for gcc
 configure:895: checking whether the C compiler (gcc  ) works
 configure:911: gcc -o conftest    conftest.c  1>&5
+configure:908:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ main(){return(0);}
+ ^
 configure:937: checking whether the C compiler (gcc  ) is a cross-compiler
 configure:942: checking whether we are using GNU C
 configure:970: checking whether gcc accepts -g

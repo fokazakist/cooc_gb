@@ -1,53 +1,47 @@
-glpluf.o: glpluf.c /usr/include/stdc-predef.h \
- /usr/lib/gcc/x86_64-linux-gnu/5/include/float.h \
- /usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/syslimits.h \
- /usr/include/limits.h /usr/include/features.h \
- /usr/include/x86_64-linux-gnu/sys/cdefs.h \
- /usr/include/x86_64-linux-gnu/bits/wordsize.h \
- /usr/include/x86_64-linux-gnu/gnu/stubs.h \
- /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
- /usr/include/x86_64-linux-gnu/bits/local_lim.h \
- /usr/include/linux/limits.h \
- /usr/include/x86_64-linux-gnu/bits/posix2_lim.h /usr/include/string.h \
- /usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h /usr/include/xlocale.h \
- /usr/include/x86_64-linux-gnu/bits/string.h \
- /usr/include/x86_64-linux-gnu/bits/string2.h /usr/include/endian.h \
- /usr/include/x86_64-linux-gnu/bits/endian.h \
- /usr/include/x86_64-linux-gnu/bits/byteswap.h \
- /usr/include/x86_64-linux-gnu/bits/types.h \
- /usr/include/x86_64-linux-gnu/bits/typesizes.h \
- /usr/include/x86_64-linux-gnu/bits/byteswap-16.h /usr/include/stdlib.h \
- /usr/include/x86_64-linux-gnu/bits/string3.h ../include/glplib.h \
- ../include/glpluf.h
+glpluf.o: glpluf.c \
+ /opt/local/lib/gcc5/gcc/x86_64-apple-darwin15/5.4.0/include/float.h \
+ /opt/local/lib/gcc5/gcc/x86_64-apple-darwin15/5.4.0/include-fixed/limits.h \
+ /opt/local/lib/gcc5/gcc/x86_64-apple-darwin15/5.4.0/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/sys/cdefs.h \
+ /usr/include/sys/_symbol_aliasing.h \
+ /usr/include/sys/_posix_availability.h /usr/include/machine/limits.h \
+ /usr/include/i386/limits.h /usr/include/i386/_limits.h \
+ /usr/include/sys/syslimits.h /usr/include/string.h /usr/include/_types.h \
+ /usr/include/sys/_types.h /usr/include/machine/_types.h \
+ /usr/include/i386/_types.h /usr/include/sys/_pthread/_pthread_types.h \
+ /usr/include/Availability.h /usr/include/AvailabilityInternal.h \
+ /usr/include/sys/_types/_size_t.h /usr/include/sys/_types/_null.h \
+ /usr/include/sys/_types/_rsize_t.h /usr/include/sys/_types/_errno_t.h \
+ /usr/include/sys/_types/_ssize_t.h /usr/include/strings.h \
+ /usr/include/secure/_string.h /usr/include/secure/_common.h \
+ ../include/glplib.h ../include/glpluf.h
 glpluf.c :
-/usr/include/stdc-predef.h :
-/usr/lib/gcc/x86_64-linux-gnu/5/include/float.h :
-/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/limits.h :
-/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/syslimits.h :
+/opt/local/lib/gcc5/gcc/x86_64-apple-darwin15/5.4.0/include/float.h :
+/opt/local/lib/gcc5/gcc/x86_64-apple-darwin15/5.4.0/include-fixed/limits.h :
+/opt/local/lib/gcc5/gcc/x86_64-apple-darwin15/5.4.0/include-fixed/syslimits.h :
 /usr/include/limits.h :
-/usr/include/features.h :
-/usr/include/x86_64-linux-gnu/sys/cdefs.h :
-/usr/include/x86_64-linux-gnu/bits/wordsize.h :
-/usr/include/x86_64-linux-gnu/gnu/stubs.h :
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h :
-/usr/include/x86_64-linux-gnu/bits/posix1_lim.h :
-/usr/include/x86_64-linux-gnu/bits/local_lim.h :
-/usr/include/linux/limits.h :
-/usr/include/x86_64-linux-gnu/bits/posix2_lim.h :
+/usr/include/sys/cdefs.h :
+/usr/include/sys/_symbol_aliasing.h :
+/usr/include/sys/_posix_availability.h :
+/usr/include/machine/limits.h :
+/usr/include/i386/limits.h :
+/usr/include/i386/_limits.h :
+/usr/include/sys/syslimits.h :
 /usr/include/string.h :
-/usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h :
-/usr/include/xlocale.h :
-/usr/include/x86_64-linux-gnu/bits/string.h :
-/usr/include/x86_64-linux-gnu/bits/string2.h :
-/usr/include/endian.h :
-/usr/include/x86_64-linux-gnu/bits/endian.h :
-/usr/include/x86_64-linux-gnu/bits/byteswap.h :
-/usr/include/x86_64-linux-gnu/bits/types.h :
-/usr/include/x86_64-linux-gnu/bits/typesizes.h :
-/usr/include/x86_64-linux-gnu/bits/byteswap-16.h :
-/usr/include/stdlib.h :
-/usr/include/x86_64-linux-gnu/bits/string3.h :
+/usr/include/_types.h :
+/usr/include/sys/_types.h :
+/usr/include/machine/_types.h :
+/usr/include/i386/_types.h :
+/usr/include/sys/_pthread/_pthread_types.h :
+/usr/include/Availability.h :
+/usr/include/AvailabilityInternal.h :
+/usr/include/sys/_types/_size_t.h :
+/usr/include/sys/_types/_null.h :
+/usr/include/sys/_types/_rsize_t.h :
+/usr/include/sys/_types/_errno_t.h :
+/usr/include/sys/_types/_ssize_t.h :
+/usr/include/strings.h :
+/usr/include/secure/_string.h :
+/usr/include/secure/_common.h :
 ../include/glplib.h :
 ../include/glpluf.h :

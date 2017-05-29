@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
   gspan.end_of_cooc = end_of_cooc;
   gspan.is_nomal = is_nomal;
   if(percent==true){
-    gspan.minsup = gspan.gdata.size() * minp * 0.9 /100;
+    gspan.minsup = gspan.gdata.size() * minp /100;
   }
   gspan.lpboost();
 
@@ -113,8 +113,9 @@ public:
 };
 
 void Gspan::lpboost(){
+  // "out" is name of output model file
   const char *out = "model";
-  //const char *log = "model1";
+  
   //initialize
   unsigned int gnum = gdata.size(); 
   weight.resize(gnum);
@@ -131,18 +132,18 @@ void Gspan::lpboost(){
   
   std::cout.setf(std::ios::fixed,std::ios::floatfield);
   std::cout.precision(8);
+  
   //Initialize GLPK
-
   int* index = new int[gnum+2]; double* value = new double[gnum+2];
   LPX* lp = lpx_create_prob();
 		       
   lpx_add_cols(lp, gnum+1); // set u_1,...u_l, beta
   for (unsigned int i = 0; i < gnum; ++i){
     lpx_set_col_bnds(lp, COL(i), LPX_DB, 0.0, 1/(nu*gnum));
-    lpx_set_obj_coef(lp, COL(i), 0); // u
+    lpx_set_obj_coef(lp, COL(i), 0); // u ... lambda
   }
   lpx_set_col_bnds(lp, COL(gnum), LPX_FR, 0.0, 0.0);
-  lpx_set_obj_coef(lp, COL(gnum), 1); // beta
+  lpx_set_obj_coef(lp, COL(gnum), 1); // beta ... gamma
   lpx_set_obj_dir(lp, LPX_MIN); //optimization direction: min objective
 		       
   lpx_add_rows(lp,1); // Add one row constraint s.t. sum_u == 1
@@ -160,6 +161,7 @@ void Gspan::lpboost(){
   for(unsigned int itr=0;itr < max_itr;++itr){
     std::cout <<"itrator : "<<itr+1<<std::endl;
     if(itr==coocitr) need_to_cooc=true;
+    
     opt_pat.gain=0.0;//gain init
     opt_pat.size=0;
     opt_pat.new_node = true;
@@ -182,18 +184,18 @@ void Gspan::lpboost(){
       dfscode=opt_pat_cooc.dfscode[0]+"\t"+opt_pat_cooc.dfscode[1];//=opt_pat_cooc.dfscode;
       
     }
-    std::cout<<"not cooc  "<<opt_pat.gain<<"  :"<<opt_pat.locsup.size()<<" *  "<<opt_pat.dfscode<<std::endl;
     
-    if(cooc_is_opt){
+    //print new hypo pattern
+    //std::cout<<"not cooc  "<<opt_pat.gain<<"  :"<<opt_pat.locsup.size()<<" *  "<<opt_pat.dfscode<<std::endl;
+    /*if(cooc_is_opt){
       std::cout<<"    cooc  "<<opt_pat_cooc.gain<<"  :"<<opt_pat_cooc.locsup.size()<<" *  "<<opt_pat_cooc.dfscode[0]+"\t"+opt_pat_cooc.dfscode[1]<<std::endl;
-    }
-    //std::cout<<locvec.size()<<std::endl;
+      }*/
+   
     model.flag.resize(itr+1);
     model.flag[itr]=_y;
     model.tmp[itr]=locvec;
 
     std::fill (result.begin (), result.end(), -_y);
-      
     for (unsigned int i = 0; i < locvec.size(); ++i) result[locvec[i]] = _y;
     double uyh = 0;
     for (unsigned int i = 0; i < gnum;  ++i) { // summarizing hypotheses
@@ -261,39 +263,11 @@ void Gspan::lpboost(){
       model.weight[r] = - lpx_get_row_dual(lp, ROW(r+1));
       if(model.weight[r] < 0) model.weight[r] = 0; // alpha > 0
       os << model.flag[r] * model.weight[r] << "\t" << model.dfs_vector[r] << std::endl;
-      //os1 <<model.dfs_vector[r]<<"\t";
-      //std::cout << model.flag[r] * model.weight[r] << "\t" << model.dfs_vector[r] << std::endl;
-      /*
-      vector<int>::iterator it = model.tmp[r].begin();
-      for(unsigned int g=0;g!=gnum;++g){
-	if(*it==(int)g){
-	  pred[g] += model.flag[r] * model.weight[r];
-	  os1 << g <<",";
-	  ++it;
-	}else{
-	  pred[g] -= model.flag[r] * model.weight[r];
-	}
-      }
-      os1<<std::endl;
-      */
     }
-    //std::cout<<"Prediction for training data :"<<pred.size()<<std::endl;
-    /*
-    float acc = 0;
-    //for(vector<float>::iterator it = pred.begin();it != pred.end();++it){
-    for(unsigned int i=0;i!=gnum;++i){
-      //std::cout<<pred[i]<<std::endl;
-      if(corlab[i]*pred[i]>0){
-	++acc;
-      }
-    }
-    std::cout<<"Prediction for training data :"<<acc / gnum<<std::endl;
-    */
     std::cout << "After iteration " << itr+1 << std::endl;
     std::cout << "Margin: " << margin << std::endl;
     std::cout << "Margin Error: " << margin_error << std::endl;
   }
-  //std::cout << "Debug!!" << std::endl;
   delete [] index; delete [] value;
   lpx_delete_prob(lp);
 }

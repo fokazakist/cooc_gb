@@ -40,10 +40,10 @@ pkgincludedir = $(includedir)/GLPK
 
 top_builddir = ..
 
-ACLOCAL = /home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing aclocal
-AUTOCONF = /home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing autoconf
-AUTOMAKE = /home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing automake
-AUTOHEADER = /home/okazaki/gBoost/GLP-0.1/glpk-4.8/missing autoheader
+ACLOCAL = /Users/fokazaki/gboost/cooc_gb/glpk-4.8/missing aclocal
+AUTOCONF = autoconf
+AUTOMAKE = /Users/fokazaki/gboost/cooc_gb/glpk-4.8/missing automake
+AUTOHEADER = autoheader
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL} $(AM_INSTALL_PROGRAM_FLAGS)
