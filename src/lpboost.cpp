@@ -170,7 +170,7 @@ void Gspan::lpboost(){
     opt_pat.locsup.resize(0);
     pattern.resize(0);
     opt_pat.dfscode="";
-    Crun();
+    pattern_search();
     //std::cout<<opt_pat.gain<<"  :"<<opt_pat.dfscode<<std::endl;
     std::vector <int>     result (gnum);
     int _y;
@@ -188,7 +188,7 @@ void Gspan::lpboost(){
     }
     
     //print new hypo pattern
-    //std::cout<<"not cooc  "<<opt_pat.gain<<"  :"<<opt_pat.locsup.size()<<" *  "<<opt_pat.dfscode<<std::endl;
+    std::cout<<opt_pat.gain<<"  :"<<opt_pat.locsup.size()<<" *  "<<opt_pat.dfscode<<std::endl;
     /*if(cooc_is_opt){
       std::cout<<"    cooc  "<<opt_pat_cooc.gain<<"  :"<<opt_pat_cooc.locsup.size()<<" *  "<<opt_pat_cooc.dfscode[0]+"\t"+opt_pat_cooc.dfscode[1]<<std::endl;
       }*/

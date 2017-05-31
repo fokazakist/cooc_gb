@@ -8,8 +8,10 @@
 #include <iostream>
 #include <ext/hash_map>
 #include <math.h>
+#include <unordered_map>
 
 using std::map;
+using std::unorderd_map;
 using std::list;
 using std::string;
 using std::vector;
@@ -150,6 +152,22 @@ struct CDPat{//co-occurence discrimination pattern
   vector<int> locsup;
   double gain;
 };
+
+
+
+struct CashTree{
+  vector<int> locsup;
+  map<Pair,CashTree*> b_child;
+  map<int,map<Pair,CashTree*>,greater<int> > f_child;
+  double gain;
+  double max_gain;
+  unsigned int wildcard_res;
+};
+
+struct CashTreeRoot {
+  map<Triplet,CashTree*> one_edge_graphs;
+};
+
 class Gspan {
  private:
   bool is_min();
@@ -169,14 +187,8 @@ class Gspan {
   void set_data(std::istream& is) {
     gdata = readGraphs(is);
   };
-
-  void edge_grow(GraphToTracers&,Ctree&);
-  void edge_grow(GraphToTracers&,CRoot&);
-  void edge_grow(Ctree&);
   void report(GraphToTracers&);
-  void first_tree_make();
-  void cash_tsearch(GraphToTracers&,Ctree&);
-  void gcalc_tsearch(GraphToTracers&,Ctree&);
+  void first_tree_search();
 
   //lpboost
   vector<double> weight;
@@ -190,22 +202,23 @@ class Gspan {
   double conv_epsilon;
   bool end_of_cooc;
   bool is_nomal;
-  bool can_prune(GraphToTracers&);
-  bool can_prune(GraphToTracers&,Ctree&);
   void lpboost();
 
   //cashing
-  CRoot* croot;
+  CashTreeRoot* croot;
   bool first_flag;
-  list<Ctree*> search_nodes;
   unsigned int TNnum;
-  void Crun(); 
-  void cooc_tsearch(GraphToTracers&,Ctree&);
-  bool cooc_tsearch(GraphToTracers&,Ctree&,GraphToTracers&,Ctree&);
   bool cooc_is_opt;
-  void coocsearch();
+  //void coocsearch();
   bool need_to_cooc;
   //only_cooc_search()
+  
+  void pattern_search();
+  void edge_grow(GraphToTracers&,CashTree&);
+  bool can_prune(GraphToTracers&,CashTree&);
+  bool can_prune(CashTree&);
+  void cash_tree_search();
+  unordered_map<vector<DFSCode>,double> unsearch
 };
 
 Graph toGraph(vector<DFSCode>&);
