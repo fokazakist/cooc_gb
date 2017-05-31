@@ -267,7 +267,7 @@ void Gspan::lpboost(){
   os.precision(12);
   std::vector<float> pred(gnum);
   std::fill (pred.begin (), pred.end(), 0.0);
-  for (unsigned int r = 0; r < stop_itr; ++r){
+  for (unsigned int r = 0; r < stop_itr+1; ++r){
     model.weight[r] = - lpx_get_row_dual(lp, ROW(r+1));
     if(model.weight[r] < 0) model.weight[r] = 0; // alpha > 0
     os << model.flag[r] * model.weight[r] << "\t" << model.dfs_vector[r] << std::endl;

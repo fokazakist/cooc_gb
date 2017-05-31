@@ -1,6 +1,6 @@
 CXX = g++
 VERSION = 0.01
-CXXFLAGS = -std=c++11 -O3 -Wall -Wno-deprecated
+CXXFLAGS = -std=c++11 -O3 -Wall -Wno-deprecated -I/usr/local/Cellar/boost/1.60.0_1/include/
 TARGETS = evaluator
 OBJ = evaluator.o
 
