@@ -156,6 +156,8 @@ void Gspan::lpboost(){
 		       
   double beta = 0.0;
   double margin = 0.0;
+
+  unsigned int stop_itr = 0;
   
   //main loop
   for(unsigned int itr=0;itr < max_itr;++itr){
@@ -206,9 +208,10 @@ void Gspan::lpboost(){
 
     if( (uyh <= beta + conv_epsilon ) ){
       std::cout << "*********************************" << std::endl;
-      std::cout << "Convergence ! at iteration: " << itr+1 << std::endl;
+      std::cout << "Convergence ! at iteration: " << itr << std::endl;
       std::cout << "*********************************" << std::endl;
-      if(!end_of_cooc || need_to_cooc == true) break;
+      stop_itr = itr - 1;
+      if(!end_of_cooc || need_to_cooc == true){ break; }
       need_to_cooc = true;
     }
       
@@ -247,27 +250,29 @@ void Gspan::lpboost(){
     for (unsigned int i = 0; i < gnum; ++i){
       wbias += corlab[i] * weight[i];
     }
-    std::ofstream os (out);
-    //std::ofstream os1 (log);
-    if (! os) {
-      std::cerr << "FATAL: Cannot open output file: " << out << std::endl;
-      return;
-    }
-    os.setf(std::ios::fixed,std::ios::floatfield);
-    os.precision(12);
 
+    //model output is after itr
 
-    std::vector<float> pred(gnum);
-    std::fill (pred.begin (), pred.end(), 0.0);
-    for (unsigned int r = 0; r < itr; ++r){
-      model.weight[r] = - lpx_get_row_dual(lp, ROW(r+1));
-      if(model.weight[r] < 0) model.weight[r] = 0; // alpha > 0
-      os << model.flag[r] * model.weight[r] << "\t" << model.dfs_vector[r] << std::endl;
-    }
-    std::cout << "After iteration " << itr+1 << std::endl;
+    std::cout << "After iteration " << itr+2 << std::endl;
     std::cout << "Margin: " << margin << std::endl;
     std::cout << "Margin Error: " << margin_error << std::endl;
   }
+  
+  std::ofstream os (out);
+  if (! os) {
+    std::cerr << "FATAL: Cannot open output file: " << out << std::endl;
+    return;
+  }
+  os.setf(std::ios::fixed,std::ios::floatfield);
+  os.precision(12);
+  std::vector<float> pred(gnum);
+  std::fill (pred.begin (), pred.end(), 0.0);
+  for (unsigned int r = 0; r < stop_itr; ++r){
+    model.weight[r] = - lpx_get_row_dual(lp, ROW(r+1));
+    if(model.weight[r] < 0) model.weight[r] = 0; // alpha > 0
+    os << model.flag[r] * model.weight[r] << "\t" << model.dfs_vector[r] << std::endl;
+  }
+  
   delete [] index; delete [] value;
   lpx_delete_prob(lp);
 }
