@@ -8,10 +8,9 @@
 #include <iostream>
 #include <ext/hash_map>
 #include <math.h>
-#include <unordered_map>
+#include "ptree.h"
 
 using std::map;
-using std::unorderd_map;
 using std::list;
 using std::string;
 using std::vector;
@@ -154,6 +153,14 @@ struct CDPat{//co-occurence discrimination pattern
 };
 
 
+class pDFSCodeTree: public ptree<DFSCode>{
+ private:
+  void print(int,vector<DFSCode>);
+ public:
+  void print();
+};
+
+
 
 struct CashTree{
   vector<int> locsup;
@@ -161,6 +168,8 @@ struct CashTree{
   map<int,map<Pair,CashTree*>,greater<int> > f_child;
   double gain;
   double max_gain;
+  bool leaf;
+  unsigned int maxtoc;
   unsigned int wildcard_res;
 };
 
@@ -204,6 +213,8 @@ class Gspan {
   bool is_nomal;
   void lpboost();
 
+  pDFSCodeTree bsp;
+
   //cashing
   CashTreeRoot* croot;
   bool first_flag;
@@ -218,7 +229,7 @@ class Gspan {
   bool can_prune(GraphToTracers&,CashTree&);
   bool can_prune(CashTree&);
   void cash_tree_search();
-  unordered_map<vector<DFSCode>,double> unsearch
+  void search_child(CashTree&);
 };
 
 Graph toGraph(vector<DFSCode>&);

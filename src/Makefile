@@ -1,7 +1,7 @@
 CXX = g++
 VERSION = 0.01
 NAME = gspan
-CXXFLAGS = -O3 -Wall -Wno-deprecated
+CXXFLAGS = -O3 -Wall -Wno-deprecated -std=c++11
 LDFLAGS =  -lm -ldl #remove "-static" for Mac,in linux need to compile?
 TARGETS = lpboost
 OBJ = gspan.o  ctree.o

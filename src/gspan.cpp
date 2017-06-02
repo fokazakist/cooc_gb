@@ -344,3 +344,27 @@ Graph toGraph(vector<DFSCode>& codes){
   return g;
 }
 
+void pDFSCodeTree::print(){
+  std::cout << "Node : " <<node_info.size() << std::endl;
+  vector<DFSCode> t;t.resize(0);
+  print(root,t);
+}
+
+
+void pDFSCodeTree::print(int n,vector<DFSCode> pattern){
+  //std::cout << "node : "<<n << std::endl;
+  //std::cout << "pattern size : "<<pattern.size() << std::endl;
+  //std::cout << node_info.size() << std::endl;
+  vector<DFSCode> pat=pattern;
+  int ps = pattern.size();
+  if(node_info[n].is_Term){
+    std::cout << node_info[n].info << " : ";
+    std::cout << pattern << std::endl;
+  }
+  //std::cout << n << std::endl;
+  for(auto it = edge_label[n].begin();it != edge_label[n].end();++it){
+    std::copy(it->second.begin(),it->second.end(),std::back_inserter(pat));
+    print(it->first,pat);
+    pat.resize(ps);
+  }
+}
